@@ -33,15 +33,13 @@ def get_programist_vacansies(url, language, page=''):
     return get_response(url, params=params)
 
 
-def predict_salary(salary: dict):
-    if salary['currency'] != 'RUR' or salary is None:
-        return
-    if salary['from'] and salary['to']:
-        return int((salary['from'] + salary['to']) / 2)
-    if salary['from']:
-        return int(salary['from'] * 0.8)
-    if salary['to']:
-        return int(salary['to'] * 1.2)
+def predict_salary(salary_from, salary_to):
+    if salary_from and salary_to:
+        return int((salary_from + salary_to) / 2)
+    if salary_from:
+        return int(salary_from * 1.2)
+    if salary_to:
+        return int(salary_to * 0.8)
 
 
 response = requests.get('https://habr.com/ru/post/310262/')
@@ -61,7 +59,8 @@ for language in program_languages.keys():
     processed_vacancy_count = 0
     for page in vacancies_all_pages:
         vacancies_found += page['found']
-        page_predicted_salaries = [predict_salary(vacansy['salary']) for vacansy in page['items'] if vacansy['salary']]
+        page_predicted_salaries = [predict_salary(vacansy['salary']['from'], vacansy['salary']['to']) if vacansy['salary']['currency'] == 'RUR' \
+                else None for vacansy in page['items'] if vacansy['salary'] is not None]
         page_salaries = [salary for salary in page_predicted_salaries if salary is not None]
         salaries_sum += sum(page_salaries)
         processed_vacancy_count += len(page_salaries)
@@ -75,3 +74,9 @@ pprint(program_languages)
 
 
 
+# vacancies_all_pages = [get_programist_vacansies(urls['vacancies'], 'JavaScript', 1)]
+# vacancies = vacancies_all_pages[0]['items']
+# pprint(vacancies)
+# pprint([vacancy['salary'] for vacancy in vacancies])
+
+# print(salaries)
