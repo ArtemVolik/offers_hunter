@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from terminaltables import AsciiTable
 
+
 def get_response(url, params=None):
     response = requests.get(url, params)
     response.raise_for_status()
@@ -35,7 +36,3 @@ def print_table_from_dict(title, input_dict):
     table_instance.justify_columns[2] = 'right'
     print(table_instance.table)
     print()
-
-
-
-

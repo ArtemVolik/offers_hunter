@@ -1,4 +1,5 @@
 from func import get_response, get_languages, predict_salary, print_table_from_dict
+
 urls = {
     'specialization': 'https://api.hh.ru/specializations',
     'vacancies': 'https://api.hh.ru/vacancies'
@@ -25,7 +26,6 @@ def get_programmer_vacancies(url, language, page=''):
 
 
 def main():
-
     program_languages = get_languages('https://habr.com/ru/post/310262/')
     for language in program_languages.keys():
 
@@ -38,9 +38,9 @@ def main():
 
         for page in vacancies_all_pages:
             vacancies_found += page['found']
-            page_predicted_salaries = [predict_salary(vacansy['salary']['from'], vacansy['salary']['to'])
-                                       if vacansy['salary']['currency'] == 'RUR' else None for vacansy in page['items']
-                                       if vacansy['salary'] is not None]
+            page_predicted_salaries = [predict_salary(vacancy['salary']['from'], vacancy['salary']['to'])
+                                       if vacancy['salary']['currency'] == 'RUR' else None for vacancy in page['items']
+                                       if vacancy['salary'] is not None]
             page_salaries = [salary for salary in page_predicted_salaries if salary is not None]
             salaries_sum += sum(page_salaries)
             processed_vacancy_count += len(page_salaries)
@@ -48,7 +48,7 @@ def main():
         program_languages[language].update({
             'vacancies_found': vacancies_found,
             'vacancies_processed': processed_vacancy_count,
-            'avarage_salary': int(salaries_sum / processed_vacancy_count)
+            'average_salary': int(salaries_sum / processed_vacancy_count)
         })
     return program_languages
 
@@ -56,6 +56,3 @@ def main():
 if __name__ == '__main__':
     program_languages_statistic = main()
     print_table_from_dict('HeadHunter Moscow', program_languages_statistic)
-
-
-
