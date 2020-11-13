@@ -1,4 +1,3 @@
-from pprint import pprint
 from func import get_response, get_languages, predict_salary, print_table_from_dict
 urls = {
     'specialization': 'https://api.hh.ru/specializations',
@@ -13,7 +12,7 @@ def get_specialization(url, specialization):
     return programming_vacancy[0][1]
 
 
-def get_programist_vacansies(url, language, page=''):
+def get_programmer_vacancies(url, language, page=''):
     params = dict()
     params['specialization'] = get_specialization(urls['specialization'], 'программирование')
     params['period'] = 30
@@ -30,8 +29,8 @@ def main():
     program_languages = get_languages('https://habr.com/ru/post/310262/')
     for language in program_languages.keys():
 
-        pages_quantity = get_programist_vacansies(urls['vacancies'], language)['pages']
-        vacancies_all_pages = [get_programist_vacansies(urls['vacancies'], language, str(page)) for page in
+        pages_quantity = get_programmer_vacancies(urls['vacancies'], language)['pages']
+        vacancies_all_pages = [get_programmer_vacancies(urls['vacancies'], language, str(page)) for page in
                                range(pages_quantity)]
         vacancies_found: int = 0
         salaries_sum: int = 0
@@ -39,10 +38,9 @@ def main():
 
         for page in vacancies_all_pages:
             vacancies_found += page['found']
-            page_predicted_salaries = [
-                predict_salary(vacansy['salary']['from'], vacansy['salary']['to']) if vacansy['salary'][
-                                                                                          'currency'] == 'RUR'
-                else None for vacansy in page['items'] if vacansy['salary'] is not None]
+            page_predicted_salaries = [predict_salary(vacansy['salary']['from'], vacansy['salary']['to'])
+                                       if vacansy['salary']['currency'] == 'RUR' else None for vacansy in page['items']
+                                       if vacansy['salary'] is not None]
             page_salaries = [salary for salary in page_predicted_salaries if salary is not None]
             salaries_sum += sum(page_salaries)
             processed_vacancy_count += len(page_salaries)
