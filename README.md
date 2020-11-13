@@ -12,7 +12,7 @@ Script gather vacancies data from [HeadHunter](https://hh.ru/) and [SuperJob](ht
        
  
  ## How it works?
- ###Quite simple:
+ ### Quite simple:
 1. Execute `HeadHunter.py` to get HeadHunters salaries statistics.
  
 2. Execute `SuperJob.py` to get HeadHunters salaries statistics.
