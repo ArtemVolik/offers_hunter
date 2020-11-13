@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from HeadHunter import predict_salary, get_languages, print_table_from_dict
 
 
-
 url = 'https://api.superjob.ru/2.33/vacancies/'
 
 
