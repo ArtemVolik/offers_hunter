@@ -21,24 +21,18 @@ def main():
     }
     for language in programing_languages:
         params['page'] = 0
-        print(language)
         vacancies_found = 0
         vacancies_operated = 0
         salaries_sum = 0
         params['keywords'] = f'Программист {language}'
-        print(params)
         more_pages = True
-        print(params['page'])
         while more_pages:
             response = requests.get(url, headers=header, params=params)
             params['page'] += 1
-            print(params['page'])
             response.raise_for_status()
             content = response.json()
             more_pages = content['more']
-            print(more_pages)
             vacancies_found += content['total']
-            print('total', content['total'])
             vacancies = content['objects']
             predicted_salaries = [predict_salary(vacancy['payment_from'], vacancy['payment_to']) for vacancy in
                                   vacancies
