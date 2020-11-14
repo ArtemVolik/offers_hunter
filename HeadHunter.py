@@ -40,8 +40,8 @@ def main():
             vacancies_found += page['found']
             page_predicted_salaries = [predict_salary(vacancy['salary']['from'], vacancy['salary']['to'])
                                        if vacancy['salary']['currency'] == 'RUR' else None for vacancy in page['items']
-                                       if vacancy['salary'] is not None]
-            page_salaries = [salary for salary in page_predicted_salaries if salary is not None]
+                                       if vacancy['salary']]
+            page_salaries = [salary for salary in page_predicted_salaries if salary]
             salaries_sum += sum(page_salaries)
             processed_vacancy_count += len(page_salaries)
 
@@ -50,9 +50,8 @@ def main():
             'vacancies_processed': processed_vacancy_count,
             'average_salary': int(salaries_sum / processed_vacancy_count)
         })
-    return program_languages
+    print_table_from_data('HeadHunter Moscow', program_languages)
 
 
 if __name__ == '__main__':
-    program_languages_statistic = main()
-    print_table_from_data('HeadHunter Moscow', program_languages_statistic)
+    main()

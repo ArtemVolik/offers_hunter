@@ -1,7 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
-from HeadHunter import predict_salary, get_languages, print_table_from_data
+from func import predict_salary, get_languages, print_table_from_data
 
 url = 'https://api.superjob.ru/2.33/vacancies/'
 
@@ -34,7 +34,7 @@ def main():
             vacancies = content['objects']
             predicted_salaries = [predict_salary(vacancy['payment_from'], vacancy['payment_to']) for vacancy in
                                   vacancies
-                                  if predict_salary(vacancy['payment_from'], vacancy['payment_to']) is not None]
+                                  if predict_salary(vacancy['payment_from'], vacancy['payment_to']) ]
             vacancies_operated += len(predicted_salaries)
             salaries_sum = sum(predicted_salaries)
 
@@ -44,9 +44,8 @@ def main():
             'average_salary': int(salaries_sum / vacancies_operated if vacancies_operated else 1)
 
         })
-    return programing_languages
+    print_table_from_data('SuperJob Moscow', programing_languages)
 
 
 if __name__ == '__main__':
-    programing_languages_statistic = main()
-    print_table_from_data('SuperJob Moscow', programing_languages_statistic)
+    main()
