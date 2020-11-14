@@ -27,12 +27,11 @@ def predict_salary(salary_from, salary_to):
         return int(salary_to * 0.8)
 
 
-def print_table_from_data(title, data):
+def print_table_from_data(columns_titles, program_languages_statistic):
     table_data = [('Язык программирования', 'Вакансий найдено', 'Вакансий обработано', 'Средняя зарплата')]
-    unpacked = [(language[0], *language[1].values()) for language in data.items()]
+    unpacked = [(language[0], *language[1].values()) for language in program_languages_statistic.items()]
     for language_data in unpacked:
         table_data.append(language_data)
-    table_instance = AsciiTable(table_data, title)
+    table_instance = AsciiTable(table_data, columns_titles)
     table_instance.justify_columns[2] = 'right'
     print(table_instance.table)
-    print()
