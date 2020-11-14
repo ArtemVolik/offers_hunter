@@ -1,4 +1,4 @@
-from func import get_response, get_languages, predict_salary, print_table_from_dict
+from func import get_response, get_languages, predict_salary, print_table_from_data
 
 urls = {
     'specialization': 'https://api.hh.ru/specializations',
@@ -55,4 +55,4 @@ def main():
 
 if __name__ == '__main__':
     program_languages_statistic = main()
-    print_table_from_dict('HeadHunter Moscow', program_languages_statistic)
+    print_table_from_data('HeadHunter Moscow', program_languages_statistic)

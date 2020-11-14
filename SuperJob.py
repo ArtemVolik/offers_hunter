@@ -1,7 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
-from HeadHunter import predict_salary, get_languages, print_table_from_dict
+from HeadHunter import predict_salary, get_languages, print_table_from_data
 
 url = 'https://api.superjob.ru/2.33/vacancies/'
 
@@ -49,4 +49,4 @@ def main():
 
 if __name__ == '__main__':
     programing_languages_statistic = main()
-    print_table_from_dict('SuperJob Moscow', programing_languages_statistic)
+    print_table_from_data('SuperJob Moscow', programing_languages_statistic)
