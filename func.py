@@ -10,8 +10,7 @@ def get_response(url, params=None):
 
 
 def get_languages():
-    url ='https://habr.com/ru/post/310262/'
-    response = requests.get(url)
+    response = requests.get('https://habr.com/ru/post/310262/')
     response.raise_for_status()
     soup = BeautifulSoup(response.content, features='lxml')
     source_headers_raw = [header.text.replace(':', '').split() for header in soup.find_all('h3')[:15]]
