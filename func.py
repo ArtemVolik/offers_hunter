@@ -9,7 +9,8 @@ def get_response(url, params=None):
     return response.json()
 
 
-def get_languages(url):
+def get_languages():
+    url ='https://habr.com/ru/post/310262/'
     response = requests.get(url)
     response.raise_for_status()
     soup = BeautifulSoup(response.content, features='lxml')

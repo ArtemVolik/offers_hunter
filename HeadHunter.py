@@ -26,7 +26,7 @@ def get_programmer_vacancies(url, language, page=''):
 
 
 def main():
-    program_languages = get_languages('https://habr.com/ru/post/310262/')
+    program_languages = get_languages()
     for language in program_languages.keys():
 
         pages_quantity = get_programmer_vacancies(urls['vacancies'], language)['pages']
