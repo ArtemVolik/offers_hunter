@@ -10,7 +10,7 @@ def main():
     load_dotenv()
     token = os.getenv('SUPER_JOB_TOKEN')
     header = {'X-Api-App-Id': token}
-    programing_languages = get_languages('https://habr.com/ru/post/310262/')
+    programing_languages = get_languages()
     params = {
         'town': 4,
         'catalogues': 48,
@@ -34,7 +34,7 @@ def main():
             vacancies = content['objects']
             predicted_salaries = [predict_salary(vacancy['payment_from'], vacancy['payment_to']) for vacancy in
                                   vacancies
-                                  if predict_salary(vacancy['payment_from'], vacancy['payment_to']) ]
+                                  if predict_salary(vacancy['payment_from'], vacancy['payment_to'])]
             vacancies_operated += len(predicted_salaries)
             salaries_sum = sum(predicted_salaries)
 
