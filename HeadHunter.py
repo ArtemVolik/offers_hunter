@@ -1,4 +1,5 @@
 from func import get_response, get_languages, predict_salary, print_table_from_data
+from pprint import pprint
 
 urls = {
     'specialization': 'https://api.hh.ru/specializations',
@@ -8,9 +9,9 @@ urls = {
 
 def get_specialization(url, specialization):
     specializations = get_response(url)
-    programming_vacancy = [(item['name'], item['id']) for line in specializations for item in line['specializations']
+    programming_vacancy_id, *tail = [item['id'] for line in specializations for item in line['specializations']
                            if specialization in item['name'].lower()]
-    return programming_vacancy[0][1]
+    return programming_vacancy_id
 
 
 def get_programmer_vacancies(url, language, page=''):
@@ -55,3 +56,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
